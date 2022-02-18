@@ -1,0 +1,62 @@
+
+<div id="main">
+  <%= link_to 'create a new note', new_note_path, method: :get %>
+
+  <% @notes.each do |note| %>
+    <div id="note-view" >
+     <div class="card" style="width: 18rem;">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title"><%= note.title %></h5>
+          <p class="card-text"><%= note.description %></p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+    </div>
+
+    <div id="reminder-view", style="display: none;">
+      reminder
+      <% if note.date.present? || note.time.present? %>
+       <div class="card" style="width: 18rem;">
+          <img src="..." class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title"><%= note.title %></h5>
+            <p class="card-text"><%= note.description %></p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>     
+      <% end %>
+    </div>
+
+    <div id="archive-view", style="display: none;">
+      archive
+      <% if note.archive %>
+       <div class="card" style="width: 18rem;">
+          <img src="..." class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title"><%= note.title %></h5>
+            <p class="card-text"><%= note.description %></p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>     
+      <% end %>
+    </div>
+
+    <div id="bin-view", style="display: none;">
+      bin
+      <% if note.deleted == 'bin'  %>
+       <div class="card" style="width: 18rem;">
+          <img src="..." class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title"><%= note.title %></h5>
+            <p class="card-text"><%= note.description %></p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>     
+      <% end %>
+    </div>
+
+  <% end %>
+</div>
+
+

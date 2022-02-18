@@ -1,0 +1,10 @@
+<div id="main" class="card" style="width: 18rem;">
+<%= form_with model: @note, url: @action == 'edit' ? note_path : notes_path, method: @action == 'edit' ? :patch : :post do |form| %>
+  <%= form.text_field :title, placeholder: 'Title', class:'form-control' %>
+  <%= form.label :pinned, 'Pin'%>
+  <%= form.check_box :pinned%>
+  <%= form.text_field :description, placeholder: 'Take a note...', class:'form-control' %>
+  <%= form.file_field :image%>
+  <%= form.submit 'save' %>
+<% end %>
+</div>
