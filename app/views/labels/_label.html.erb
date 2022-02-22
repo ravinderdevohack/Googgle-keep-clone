@@ -1,0 +1,9 @@
+<div class="d-flex justify-content-center", id="">
+  <div class="card" style="width: 18rem;">
+    <%= form_with model: @label, url: @action == 'edit' ? label_path : labels_path, method: @action == 'edit' ? :patch : :post do |form| %>
+      <%= form.label :name, 'Label', class:'form-control' %>
+      <%= form.text_field :name, placeholder: '', class:'form-control' %>
+      <%= form.submit 'save' %>
+    <% end %>
+  </div>
+</div>

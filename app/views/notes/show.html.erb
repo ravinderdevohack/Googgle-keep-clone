@@ -1,2 +1,40 @@
-<h1>Notes#show</h1>
-<p>Find me in app/views/notes/show.html.erb</p>
+<div class="d-flex justify-content-center">
+  <% if @note.deleted == 'show' %>
+    <%= link_to edit_note_path(@note)  do %>
+      <div class="card" style="width: 18rem;  color: black;">
+        <%= button_to 'X', note_path(@note), method: :delete, class:'delete-btn' %>
+        <%= image_tag @note.image_url if @note.image_url.present? %>
+        <div class="card-body">
+          <h5 class="card-title"><%= @note.title %></h5>
+          <p class="card-text"><%= @note.description %></p>  
+          <p class="card-text"><%= @note.date if @note.date.present? %></p>
+          <p class="card-text"><%= @note.time  if @note.time.present? %></p>
+        </div>
+      </div>
+    <% end%>
+  <% end %>
+
+  <% if @note.deleted == 'bin' %>
+      <div class="card" style="width: 18rem;  color: black;">
+        <%= button_to 'X', note_path(@note), method: :delete, class:'delete-btn' %>
+        <%= button_to 'X', note_path(@note), method: :delete, class:'delete-btn' %>
+        <%= image_tag @note.image_url if @note.image_url.present? %>
+        <div class="card-body">
+          <h5 class="card-title"><%= @note.title %></h5>
+          <p class="card-text"><%= @note.description %></p>  
+          <p class="card-text"><%= @note.date if @note.date.present? %></p>
+          <p class="card-text"><%= @note.time  if @note.time.present? %></p>
+        </div>
+      </div>
+  <% end %>
+
+</div> 
+
+
+
+<script>
+  // deleteBtn = document.querySelector('.delete-btn')
+  $('.delete-btn').click( function(){
+    alert('Note added to bin')
+  })
+</script>

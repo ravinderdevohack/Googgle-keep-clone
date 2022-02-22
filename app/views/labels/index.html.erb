@@ -1,0 +1,16 @@
+<div id="main-div">
+
+<%= link_to 'create label', new_label_path, method: :get %>
+<%= link_to 'create a new note', new_note_path, class:'note' ,method: :get %>
+
+  <div class="label">
+    <% @labels.each do |label|%>
+      <div class="card" style="width: 18rem;">
+          <h5 class="card-title"><%= label.name %></h5>
+          <%= button_to 'Edit', edit_label_path(label), method: :get%>
+          <%= button_to 'Delete', label_path(label), method: :delete%>
+      </div> 
+    <% end %>
+  </div>
+</div>
+

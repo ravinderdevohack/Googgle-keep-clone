@@ -1,10 +1,40 @@
-<div id="main" class="card" style="width: 18rem;">
-<%= form_with model: @note, url: @action == 'edit' ? note_path : notes_path, method: @action == 'edit' ? :patch : :post do |form| %>
-  <%= form.text_field :title, placeholder: 'Title', class:'form-control' %>
-  <%= form.label :pinned, 'Pin'%>
-  <%= form.check_box :pinned%>
-  <%= form.text_field :description, placeholder: 'Take a note...', class:'form-control' %>
-  <%= form.file_field :image%>
-  <%= form.submit 'save' %>
-<% end %>
+<div class="d-flex justify-content-center", id="main-new">
+  <div class="card" style="width: 18rem;">
+    <%= form_with model: @note, url: @action == 'edit' ? note_path : notes_path, method: @action == 'edit' ? :patch : :post do |form| %>
+      <%= form.label :pinned,'Pin', type:'hidden' ,class:'click' %>
+      <%= form.check_box :pinned, type:'hidden', class:'click'%>
+
+      <%= form.text_field :id, value: @note.id, type:'hidden', id:'note_id' %>
+
+      <% if @note.id.present? %>
+        <%= form.label :archive, 'Archive'%>
+        <%= form.check_box :archive, class:'click'%>
+      <% end %>
+      <%= form.text_field :title, placeholder: 'Title', class:'form-control click' %>
+       <%= form.text_field :description, placeholder: 'Take a note...', class:'form-control click' %>
+
+      <div class="reminder-div" style="display: none;">
+      <%= form.date_field :date, min: Time.now , class:'click'%>
+      <%= form.time_field :time, value: "%H:%M", min: Time.now.strftime("%H:%M"), class:'click' %>
+      </div>
+
+      <input type="button", value="Add reminder", class="reminder-btn click">
+      <%= form.submit 'save' %>
+    <% end %>
+  </div>
 </div>
+
+
+<script >
+  reminder = document.querySelector('.reminder-btn')
+  reminder.addEventListener('click', function() {
+    document.querySelector('.reminder-div').style.display = 'block'
+    reminder.style.display = 'none'
+  })
+
+ 
+
+
+</script>
+
+<%= javascript_include_tag 'save' %>

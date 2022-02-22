@@ -1,4 +1,5 @@
 class NotesController < ApplicationController
+ protect_from_forgery with: :null_session
   def index
     @notes = Note.all.order(:id)
   end
@@ -9,10 +10,12 @@ class NotesController < ApplicationController
   end
 
   def create
+    # debugger
     @note = Note.new(note_params)
-    debugger
     if @note.save!
-      redirect_to root_path
+      respond_to do |format|
+        format.json{render json: @note.id.to_json}
+      end
     else
       render 'new'
     end
@@ -38,12 +41,26 @@ class NotesController < ApplicationController
   end
 
   def destroy
+    @note = Note.find(params[:id])
+    # debugger
+    @note.update(deleted: 1)
+    redirect_to root_path
+  end
+
+  def note_update
+    # debugger
+    @note = Note.find(params[:id])
+    @description = params[:description]
+    @note.update(note_params)
   end
 
   private
 
   def note_params
-    params.require(:note).permit(:title, :description, :pinned, :archive, :date, :time, :image, :deleted)
+    params.permit(:title, :description, :date, :time, :image)
+    # description: params[:description], title: params[:title], pinned: params[:pinned], 
+      # archive: params[:archive], image: params[:image], date: params[:date], time: params[:time]
+    # params.require(:note).permit(:title, :description, :pinned, :archive, :date, :time, :image, :deleted)
   end
 
 end

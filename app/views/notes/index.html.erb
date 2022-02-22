@@ -1,62 +1,98 @@
 
-<div id="main">
-  <%= link_to 'create a new note', new_note_path, method: :get %>
-
-  <% @notes.each do |note| %>
-    <div id="note-view" >
-     <div class="card" style="width: 18rem;">
-        <img src="..." class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title"><%= note.title %></h5>
-          <p class="card-text"><%= note.description %></p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-      </div>
-    </div>
-
-    <div id="reminder-view", style="display: none;">
-      reminder
-      <% if note.date.present? || note.time.present? %>
-       <div class="card" style="width: 18rem;">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title"><%= note.title %></h5>
-            <p class="card-text"><%= note.description %></p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
-        </div>     
-      <% end %>
-    </div>
-
-    <div id="archive-view", style="display: none;">
-      archive
-      <% if note.archive %>
-       <div class="card" style="width: 18rem;">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title"><%= note.title %></h5>
-            <p class="card-text"><%= note.description %></p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
-        </div>     
-      <% end %>
-    </div>
-
-    <div id="bin-view", style="display: none;">
-      bin
-      <% if note.deleted == 'bin'  %>
-       <div class="card" style="width: 18rem;">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title"><%= note.title %></h5>
-            <p class="card-text"><%= note.description %></p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
-        </div>     
-      <% end %>
-    </div>
-
+<div id="main-div", class=""  >
+  <%= link_to new_note_path do %>
+  <div class="card" style="width: 18rem;">
+    <p class="card-text">Take a note... </p>
+  </div>
   <% end %>
+
+
+  <div class="d-flex flex-wrap justify-content-evenly child">
+    
+    <% @notes.each do |note| %>
+      <div id="note-view", style="display: block; ",  class="note-view selected" >
+        <!-- notes -->
+        <%= link_to note_path(note) do %>
+          <% if note.pinned && (note.deleted == 'show') %>
+            <div>
+              <div class="card" style="width: 18rem; color: black;">
+                <%= image_tag note.image_url, style: 'height:100%;width:18rem'  if note.image_url.present? %>
+                <div class="card-body">
+                  <h5 class="card-title"><%= note.title %></h5>
+                  <p class="card-text"><%= note.description %></p>  
+                </div>
+              </div>
+            </div> 
+          <% end %>
+
+          <% if (!note.pinned) && (!note.archive) && (note.deleted == 'show')%>
+              <div class="card" style="width: 18rem; color: black;">
+                <%= image_tag note.image_url,style: 'height:100%;width:18rem' if note.image_url.present? %>
+                <div class="card-body">
+                  <h5 class="card-title"><%= note.title %></h5>
+                  <p class="card-text"><%= note.description %></p>
+                  <p class="card-text"><%= note.date if note.date.present? %></p>
+                  <p class="card-text"><%= note.time  if note.time.present? %></p>
+                </div>
+              </div>
+          <% end %>
+        <% end %>
+      </div>
+
+      <div id="reminder-view" , style="display: none;">
+        <!-- reminder -->
+        <%= link_to note_path(note) do %>
+          <% if (note.date.present? && note.time.present?) && (note.deleted == 'show') %>
+           <div class="card" style="width: 18rem;  color: black;">
+            <%= image_tag note.image_url, style: 'height:100%;width:18rem' if note.image_url.present? %>
+              <div class="card-body">
+                <h5 class="card-title"><%= note.title %></h5>
+                <p class="card-text"><%= note.description %></p>
+                <p class="card-text"><%= note.date %></p>
+                <p class="card-text"><%= note.time.strftime("%H:%M") %></p>    
+              </div>
+            </div>     
+          <% end %>
+        <% end %>
+      </div>
+
+      <div id="edit-label-view" class="edit-label-view selected", style="display: none;">
+        <!-- edit-label -->
+      </div>
+
+
+      <div id="archive-view" class="archive-view selected", style="display: none;">
+        <!-- archive -->
+        <%= link_to note_path(note) do %>
+          <% if note.archive && (note.deleted == 'show') %>
+           <div class="card" style="width: 18rem;  color: black;">
+            <%= image_tag note.image_url, style: 'height:100%;width:18rem' if note.image_url.present? %>
+                <div class="card-body">
+                <h5 class="card-title"><%= note.title %></h5>
+                <p class="card-text"><%= note.description %></p>
+              </div>
+            </div>     
+          <% end %>
+        <% end %>
+      </div>
+
+      <div id="bin-view" class="bin-view selected", style="display: none;">
+        <!-- bin -->
+        <%= link_to note_path(note) do %>
+          <% if note.deleted == 'bin'  %>
+            <div class="card" style="width: 18rem;  color: black;">
+              <%= image_tag note.image_url, style: 'height:100%;width:18rem' if note.image_url.present? %>
+              <div class="card-body">
+                <h5 class="card-title"><%= note.title %></h5>
+                <p class="card-text"><%= note.description %></p>
+              </div>
+            </div>     
+          <% end %>
+        <% end %>
+      </div>
+
+    <% end %>
+  </div>
 </div>
 
 

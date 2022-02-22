@@ -1,7 +1,8 @@
-#main {
+#main-div {
   transition: margin-left .5s;
   padding: 16px;
 }
+
 
 .sidebar {
   height: 100%;
