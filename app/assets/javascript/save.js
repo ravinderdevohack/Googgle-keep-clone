@@ -12,12 +12,12 @@ var image = document.getElementById('note_image')
 var click = document.querySelectorAll('.click')
 console.log(click)
 for(i=0; i< click.length; i++){
-  click[i].addEventListener('keyup', function(){
+  click[i].addEventListener('change', function(){
     console.log(description.value)
     if (id.value == ''){
       console.log('noy null')
       $.ajax({
-        url: `/create?description=${description.value}+&title=${title.value}`,
+        url: `/create?description=${description.value}+&title=${title.value}+&date=${date.value}+&time=${time.value}`,
         type: 'POST',
         success: function(res){
           id.value = res
@@ -27,8 +27,7 @@ for(i=0; i< click.length; i++){
 
     } else {
       $.ajax({
-        url: `/update?description=${description.value}+&id=${id.value}+&title=${title.value}
-              +&date=${date.value}+&time=${time.value}`,
+        url: `/update?description=${description.value}+&id=${id.value}+&title=${title.value}+&date=${date.value}+&time=${time.value}`,
         type: 'POST',
         success: function(res){
           console.log('success')

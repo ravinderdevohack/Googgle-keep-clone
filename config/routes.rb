@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :notes 
   root "notes#index"  
 
-  post 'update', to: 'notes#note_update'
+  post 'update', to: 'notes#update'
   post 'create', to: 'notes#create'
+  post 'notes/:id', to: 'notes#restore', as: 'restore'
 end

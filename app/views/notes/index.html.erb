@@ -42,14 +42,14 @@
       <div id="reminder-view" , style="display: none;">
         <!-- reminder -->
         <%= link_to note_path(note) do %>
-          <% if (note.date.present? && note.time.present?) && (note.deleted == 'show') %>
+          <% if (note.date.present? || note.time.present?) && (note.deleted == 'show') %>
            <div class="card" style="width: 18rem;  color: black;">
             <%= image_tag note.image_url, style: 'height:100%;width:18rem' if note.image_url.present? %>
               <div class="card-body">
                 <h5 class="card-title"><%= note.title %></h5>
                 <p class="card-text"><%= note.description %></p>
-                <p class="card-text"><%= note.date %></p>
-                <p class="card-text"><%= note.time.strftime("%H:%M") %></p>    
+                <p class="card-text"><%= note.date if note.date.present? %></p>
+                <p class="card-text"><%= note.time.strftime("%H:%M") if note.time.present? %></p>    
               </div>
             </div>     
           <% end %>

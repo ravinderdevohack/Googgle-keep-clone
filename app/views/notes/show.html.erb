@@ -16,8 +16,8 @@
 
   <% if @note.deleted == 'bin' %>
       <div class="card" style="width: 18rem;  color: black;">
-        <%= button_to 'X', note_path(@note), method: :delete, class:'delete-btn' %>
-        <%= button_to 'X', note_path(@note), method: :delete, class:'delete-btn' %>
+        <%= button_to 'X', note_path(@note), method: :delete, class:'permanent-delete-btn' %>
+        <%= button_to 'O', restore_path(@note), method: :post, class:'restore-btn' %>
         <%= image_tag @note.image_url if @note.image_url.present? %>
         <div class="card-body">
           <h5 class="card-title"><%= @note.title %></h5>
@@ -37,4 +37,11 @@
   $('.delete-btn').click( function(){
     alert('Note added to bin')
   })
+  $('.permanent-delete-btn').click( function(){
+    alert('Note permanent deleted')
+  })
+  $('.restore-btn').click( function(){
+    alert('Note is restored')
+  })
+
 </script>
