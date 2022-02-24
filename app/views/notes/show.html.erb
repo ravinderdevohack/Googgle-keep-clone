@@ -1,8 +1,10 @@
 <div class="d-flex justify-content-center">
   <% if @note.deleted == 'show' %>
-    <%= link_to edit_note_path(@note)  do %>
+    <%= link_to edit_note_path(@note), class:'underline'  do %>
       <div class="card" style="width: 18rem;  color: black;">
-        <%= button_to 'X', note_path(@note), method: :delete, class:'delete-btn' %>
+        <%= button_to  note_path(@note), method: :delete, class:'delete-btn' do %>
+          <i class="ri-delete-bin-fill"></i>        
+        <% end %>
         <%= image_tag @note.image_url if @note.image_url.present? %>
         <div class="card-body">
           <h5 class="card-title"><%= @note.title %></h5>
@@ -16,8 +18,12 @@
 
   <% if @note.deleted == 'bin' %>
       <div class="card" style="width: 18rem;  color: black;">
-        <%= button_to 'X', note_path(@note), method: :delete, class:'permanent-delete-btn' %>
-        <%= button_to 'O', restore_path(@note), method: :post, class:'restore-btn' %>
+        <%= button_to  note_path(@note), method: :delete, class:'permanent-delete-btn' do %>
+          <i class="ri-delete-bin-fill"></i>
+        <% end %>
+        <%= button_to  restore_path(@note), method: :post, class:'restore-btn' do %>
+          <i class="ri-refresh-line"></i>
+        <% end %>
         <%= image_tag @note.image_url if @note.image_url.present? %>
         <div class="card-body">
           <h5 class="card-title"><%= @note.title %></h5>

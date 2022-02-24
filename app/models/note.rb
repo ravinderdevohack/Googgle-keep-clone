@@ -6,7 +6,15 @@ class Note < ApplicationRecord
 
   def self.notes_empty
     Note.where(title: " ").where(description: " ").where(date: nil).where(time: nil)
+  end
 
+  def self.search(search)
+    if search 
+      Note.where("title ilike ?", "%#{search}%")
+      # debugger
+
+    end
+    
   end
   
 end

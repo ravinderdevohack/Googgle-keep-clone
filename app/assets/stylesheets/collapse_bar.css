@@ -41,7 +41,33 @@
 }
 
 .card:hover{
+  box-shadow: 0 0 11px rgba(33,33,33,.2);
+  box-shadow: 2px 5px skyblue;
+
 }
+
 .card{
-  border-radius: 0.5rem;
+  transition: box-shadow .3s;
+  border-radius: 1rem;
+  /*border-radius:;*/
+  /*box-shadow: 2px 5px skyblue;*/
+
 }
+
+.underline{
+  text-decoration: none;
+
+}
+.underline:hover{
+  text-decoration: none;
+
+}
+/*
+.card{
+  margin: 50px;
+  border-radius:10px;
+  border: 1px solid #ccc;
+  background: #fff;
+  float: left;
+}
+*/

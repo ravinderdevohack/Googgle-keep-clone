@@ -1,17 +1,15 @@
 <div class="d-flex justify-content-center", id="main-new">
-  <div class="card" style="width: 18rem;">
+  <div class="card" style="width: 20rem;">
     <%= form_with model: @note, url: @action == 'edit' ? note_path : notes_path, method: @action == 'edit' ? :patch : :post do |form| %>
-      <%= form.label :pinned,'Pin', type:'hidden' ,class:'click' %>
-      <%= form.check_box :pinned, type:'hidden', class:'click'%>
+      <%= form.label :pinned,'Pin' ,class:'click' %>
+      <%= form.check_box :pinned,  class:'click pinned'%>
 
-      <%= form.text_field :id, value: @note.id, type:'hidden', id:'note_id' %>
 
-      <% if @note.id.present? %>
-        <%= form.label :archive, 'Archive'%>
-        <%= form.check_box :archive, class:'click'%>
-      <% end %>
+      <%= form.label :archive, 'Archive'%>
+      <%= form.check_box :archive, class:'click archive'%>
+
       <%= form.text_field :title, placeholder: 'Title', class:'form-control click' %>
-       <%= form.text_field :description, placeholder: 'Take a note...', class:'form-control click' %>
+       <%= form.text_field :description, placeholder: 'Take a note...', class:'form-control  click' %>
 
       <div class="reminder-div" style="display: none;">
       <%= form.date_field :date, min: Time.now , class:'click'%>
@@ -19,6 +17,7 @@
       </div>
 
       <input type="button", value="Add reminder", class="reminder-btn click">
+      <%= form.text_field :id, value: @note.id, type:'hidden', id:'note_id' %>
     <% end %>
   </div>
 </div>
@@ -29,6 +28,32 @@
   reminder.addEventListener('click', function() {
     document.querySelector('.reminder-div').style.display = 'block'
     reminder.style.display = 'none'
+  })
+
+  pinned = document.querySelector(".pinned")
+  pinned.setAttribute("value", "0")  
+  pinned.addEventListener('click', function(){
+    if (pinned.checked == true) {
+      pinned.setAttribute("value", "1")
+      console.log(pinned.value)
+    }else {
+      pinned.setAttribute("value", "0")
+      console.log(pinned.value)
+    } 
+
+  })
+
+  archive = document.querySelector(".archive")
+  archive.setAttribute("value", "0")  
+  archive.addEventListener('click', function(){
+    if (archive.checked == true) {
+      archive.setAttribute("value", "1")
+      console.log(archive.value)
+    }else {
+      archive.setAttribute("value", "0")
+      console.log(archive.value)
+    } 
+
   })
 
  
