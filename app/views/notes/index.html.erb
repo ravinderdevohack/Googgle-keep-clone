@@ -59,8 +59,22 @@
         <% end %>
       </div>
 
-      <div id="edit-label-view" class="edit-label-view selected", style="display: none;">
-        <!-- edit-label -->
+      <div id="pinned-view" class="pinned-view selected", style="display: none;">
+        <!-- pinned -->
+        <%= link_to note_path(note), class:'underline' do %>
+
+          <% if note.pinned && (note.deleted == 'show') %>
+            <div>
+              <div class="card" style="width: 18rem; color: black;">
+                <%= image_tag note.image_url, style: 'height:100%;width:18rem'  if note.image_url.present? %>
+                <div class="card-body ">
+                  <h5 class="card-title"><%= note.title %></h5>
+                  <p class="card-text"><%= note.description %></p>  
+                </div>
+              </div>
+            </div> 
+          <% end %>
+        <% end %>
       </div>
 
 
