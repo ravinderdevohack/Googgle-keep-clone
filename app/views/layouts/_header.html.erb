@@ -10,6 +10,16 @@
 <nav class="navbar navbar-light bg-light ">
 
   <a class=" navbar-brand openbtn" >☰ Keep</a>  
+  <% if user_signed_in? %>
+    <%= link_to "Sign out", destroy_user_session_path, class: 'navbar-brand float-end', method: :get %>
+
+  <% else %>
+  <div class="float-end ">
+    <%= link_to "Sign up", new_user_registration_path, class: 'navbar-brand text-sm', method: :get %>
+    <%= link_to "Sign in", new_user_session_path, class: 'navbar-brand text-sm' , method: :get %>
+    
+  </div>
+  <% end %>
 
 
 </nav>

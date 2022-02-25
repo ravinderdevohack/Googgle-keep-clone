@@ -1,5 +1,6 @@
 class NotesController < ApplicationController
- protect_from_forgery with: :null_session
+ before_action :authenticate_user!
+ skip_before_action :verify_authenticity_token
   def index
     @notes = Note.all.order(:id) 
 
@@ -17,8 +18,8 @@ class NotesController < ApplicationController
   end
 
   def create
-    @note = Note.new(note_params)
     # debugger
+    @note = current_user.notes.new(note_params)
     @note.save!
     respond_to do |format|
       format.json{render json: @note.id.to_json}
@@ -36,7 +37,7 @@ class NotesController < ApplicationController
 
   def update
     # debugger
-    @note = Note.find(params[:note][:id])
+    @note = current_user.notes.find(params[:note][:id])
     @note.update(note_params)
   end
 

@@ -1,3 +1,5 @@
+<% if user_signed_in? %>
+
 
 <div id="main-div", class=""  >
   <%= link_to new_note_path, class:'underline' do %>
@@ -11,105 +13,109 @@
   <div class="d-flex flex-wrap justify-content-evenly child">
     
     <% @notes.each do |note| %>
-      <div id="note-view", style="display: block; ",  class="note-view selected" >
-        <!-- notes -->
-        <%= link_to note_path(note), class:'underline' do %>
+      <% if current_user.id == note.user_id %>
+        <div id="note-view", style="display: block; ",  class="note-view selected" >
+          <!-- notes -->
+          <%= link_to note_path(note), class:'underline' do %>
 
-          <% if note.pinned && (note.deleted == 'show') %>
-            <div>
-              <div class="card" style="width: 18rem; color: black;">
-                <%= image_tag note.image_url, style: 'height:100%;width:18rem'  if note.image_url.present? %>
-                <div class="card-body ">
-                  <h5 class="card-title"><%= note.title %></h5>
-                  <p class="card-text"><%= note.description %></p>  
+            <% if note.pinned && (note.deleted == 'show') %>
+              <div>
+                <div class="card " style="width: 18rem; color: black;">
+                  <%= image_tag note.image_url, style: 'height:100%;width:18rem'  if note.image_url.present? %>
+                  <div class="card-body ">
+                    <h5 class="card-title"><%= note.title %></h5>
+                    <p class="card-text"><%= note.description %></p>  
+                  </div>
                 </div>
-              </div>
-            </div> 
+
+              </div> 
+            <% end %>
+
+
+            <% if (!note.pinned) && (!note.archive) && (note.deleted == 'show')%>
+                <div class="card" style="width: 18rem; color: black;">
+                  <%= image_tag note.image_url,style: 'height:100%;width:18rem' if note.image_url.present? %>
+                  <div class="card-body ">
+                    <h5 class="card-title"><%= note.title %></h5>
+                    <p class="card-text"><%= note.description %></p>
+                    <p class="card-text"><%= note.date if note.date.present? %></p>
+                    <p class="card-text"><%= note.time  if note.time.present? %></p>
+                  </div>
+                </div>
+            <% end %>
           <% end %>
+        </div>
 
-
-          <% if (!note.pinned) && (!note.archive) && (note.deleted == 'show')%>
-              <div class="card" style="width: 18rem; color: black;">
-                <%= image_tag note.image_url,style: 'height:100%;width:18rem' if note.image_url.present? %>
-                <div class="card-body ">
+        <div id="reminder-view" , style="display: none;">
+          <!-- reminder -->
+          <%= link_to note_path(note), class:'underline' do %>
+            <% if (note.date.present? || note.time.present?) && (note.deleted == 'show') %>
+             <div class="card" style="width: 18rem;  color: black;">
+              <%= image_tag note.image_url, style: 'height:100%;width:18rem' if note.image_url.present? %>
+                <div class="card-body">
                   <h5 class="card-title"><%= note.title %></h5>
                   <p class="card-text"><%= note.description %></p>
                   <p class="card-text"><%= note.date if note.date.present? %></p>
-                  <p class="card-text"><%= note.time  if note.time.present? %></p>
+                  <p class="card-text"><%= note.time.strftime("%H:%M") if note.time.present? %></p>    
                 </div>
-              </div>
+              </div>     
+            <% end %>
           <% end %>
-        <% end %>
-      </div>
+        </div>
 
-      <div id="reminder-view" , style="display: none;">
-        <!-- reminder -->
-        <%= link_to note_path(note), class:'underline' do %>
-          <% if (note.date.present? || note.time.present?) && (note.deleted == 'show') %>
-           <div class="card" style="width: 18rem;  color: black;">
-            <%= image_tag note.image_url, style: 'height:100%;width:18rem' if note.image_url.present? %>
-              <div class="card-body">
-                <h5 class="card-title"><%= note.title %></h5>
-                <p class="card-text"><%= note.description %></p>
-                <p class="card-text"><%= note.date if note.date.present? %></p>
-                <p class="card-text"><%= note.time.strftime("%H:%M") if note.time.present? %></p>    
-              </div>
-            </div>     
-          <% end %>
-        <% end %>
-      </div>
+        <div id="pinned-view" class="pinned-view selected", style="display: none;">
+          <!-- pinned -->
+          <%= link_to note_path(note), class:'underline' do %>
 
-      <div id="pinned-view" class="pinned-view selected", style="display: none;">
-        <!-- pinned -->
-        <%= link_to note_path(note), class:'underline' do %>
-
-          <% if note.pinned && (note.deleted == 'show') %>
-            <div>
-              <div class="card" style="width: 18rem; color: black;">
-                <%= image_tag note.image_url, style: 'height:100%;width:18rem'  if note.image_url.present? %>
-                <div class="card-body ">
-                  <h5 class="card-title"><%= note.title %></h5>
-                  <p class="card-text"><%= note.description %></p>  
+            <% if note.pinned && (note.deleted == 'show') %>
+              <div>
+                <div class="card" style="width: 18rem; color: black;">
+                  <%= image_tag note.image_url, style: 'height:100%;width:18rem'  if note.image_url.present? %>
+                  <div class="card-body ">
+                    <h5 class="card-title"><%= note.title %></h5>
+                    <p class="card-text"><%= note.description %></p>  
+                  </div>
                 </div>
-              </div>
-            </div> 
+              </div> 
+            <% end %>
           <% end %>
-        <% end %>
-      </div>
+        </div>
 
 
-      <div id="archive-view" class="archive-view selected", style="display: none;">
-        <!-- archive -->
-        <%= link_to note_path(note), class:'underline' do %>
-          <% if note.archive && (note.deleted == 'show') %>
-           <div class="card" style="width: 18rem;  color: black;">
-            <%= image_tag note.image_url, style: 'height:100%;width:18rem' if note.image_url.present? %>
-                <div class="card-body">
-                <h5 class="card-title"><%= note.title %></h5>
-                <p class="card-text"><%= note.description %></p>
-              </div>
-            </div>     
-          <% end %>
-        <% end %>
-      </div>
-
-      <div id="bin-view" class="bin-view selected", style="display: none;">
-        <!-- bin -->
-        <%= link_to note_path(note), class:'underline' do %>
-          <% if note.deleted == 'bin'  %>
-            <div class="card" style="width: 18rem;  color: black;">
+        <div id="archive-view" class="archive-view selected", style="display: none;">
+          <!-- archive -->
+          <%= link_to note_path(note), class:'underline' do %>
+            <% if note.archive && (note.deleted == 'show') %>
+             <div class="card" style="width: 18rem;  color: black;">
               <%= image_tag note.image_url, style: 'height:100%;width:18rem' if note.image_url.present? %>
-              <div class="card-body">
-                <h5 class="card-title"><%= note.title %></h5>
-                <p class="card-text"><%= note.description %></p>
-              </div>
-            </div>     
+                  <div class="card-body">
+                  <h5 class="card-title"><%= note.title %></h5>
+                  <p class="card-text"><%= note.description %></p>
+                </div>
+              </div>     
+            <% end %>
           <% end %>
-        <% end %>
-      </div>
+        </div>
 
+        <div id="bin-view" class="bin-view selected", style="display: none;">
+          <!-- bin -->
+          <%= link_to note_path(note), class:'underline' do %>
+            <% if note.deleted == 'bin'  %>
+              <div class="card" style="width: 18rem;  color: black;">
+                <%= image_tag note.image_url, style: 'height:100%;width:18rem' if note.image_url.present? %>
+                <div class="card-body">
+                  <h5 class="card-title"><%= note.title %></h5>
+                  <p class="card-text"><%= note.description %></p>
+                </div>
+              </div>     
+            <% end %>
+          <% end %>
+        </div>
+
+      <% end %>
     <% end %>
   </div>
 </div>
 
+<% end %>
 
